@@ -7,12 +7,12 @@ build-backend = "setuptools.build_meta"
 # This section contains the core metadata for your project.
 # This is the information that would be displayed on PyPI if you publish it.
 [project]
-name = "mlops-project-template"
+name = "students_performance"
 version = "0.0.1"
 authors = [
   { name="Matin Hosseini", email="matinhosseini8102@gmail.com" },
 ]
-description = "A short, one-sentence description of your project."
+description = "first end-to-end practical project."
 readme = "README.md"
 requires-python = ">=3.13"
 # classifiers = [
@@ -33,8 +33,8 @@ dependencies = [
 
 # This section provides useful links about your project.
 [project.urls]
-Homepage = "https://github.com/matinhosseinii/mlops-project-template"
-# "Bug Tracker" = "https://github.com/matinhosseinii/mlops-project-template/tests"
+Homepage = "https://github.com/matinhosseinii/students-performance"
+# "Bug Tracker" = "https://github.com/matinhosseinii/students-performance/tests"
 
 # This section is for settings specific to the setuptools build tool.
 # This line is crucial for telling setuptools to find your code in the `src/` directory.
