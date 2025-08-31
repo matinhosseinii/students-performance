@@ -6,7 +6,7 @@ from logging.handlers import RotatingFileHandler
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 
 # Function to set up a configured logger.
-def setup_logger(name="student-performance", log_file="students-performance.log", level=logging.INFO):
+def setup_logger(name="student-performance", log_file="logs\\students-performance.log", level=logging.INFO):
     
     
     logger = logging.getLogger(name)
