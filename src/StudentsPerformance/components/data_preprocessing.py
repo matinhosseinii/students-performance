@@ -69,6 +69,8 @@ class DataPreprocessingConfig:
     """
     train_path = os.path.join('data', '02_Intermediate', 'Train.csv')
     test_path = os.path.join('data', '02_Intermediate', 'Test.csv')
+    processed_train_path = os.path.join('data', '03_Processed', 'Processed_Train.csv')
+    processed_test_path = os.path.join('data', '03_Processed', 'Processed_Test.csv')
     preprocessor_obj_file_path: str = os.path.join('models', 'preprocessor.pkl')
 
 class DataPreprocessor:
@@ -152,6 +154,20 @@ class DataPreprocessor:
             # Transform the test data
             X_test_processed = preprocessor_pipeline.transform(X_test)
             
+            processed_train_df = pd.concat((pd.DataFrame(X_train_processed), y_train), axis=1)
+            processed_test_df = pd.concat((pd.DataFrame(X_test_processed), y_test), axis=1)
+            
+            try:
+                # Get the directory part of the log file path
+                processed_data_dir = os.path.dirname(self.preprocessing_config.processed_train_path)
+                # Create the directory if it doesn't exist
+                os.makedirs(processed_data_dir, exist_ok=True)
+            except Exception as e:
+                print(f"Error creating log directory: {e}")
+
+            processed_train_df.to_csv(self.preprocessing_config.processed_train_path, index=False, header=True)
+            processed_test_df.to_csv(self.preprocessing_config.processed_test_path, index=False, header=True)
+
             # Combine features and target back into single arrays
             train_arr = np.c_[X_train_processed, np.array(y_train)]
             test_arr = np.c_[X_test_processed, np.array(y_test)]
