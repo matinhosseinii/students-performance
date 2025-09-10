@@ -67,8 +67,6 @@ class DataPreprocessingConfig:
     """
     Configuration class for the Data Preprocessing component.
     """
-    train_path = os.path.join('data', '02_Intermediate', 'Train.csv')
-    test_path = os.path.join('data', '02_Intermediate', 'Test.csv')
     processed_train_path = os.path.join('data', '03_Processed', 'Processed_Train.csv')
     processed_test_path = os.path.join('data', '03_Processed', 'Processed_Test.csv')
     preprocessor_obj_file_path: str = os.path.join('models', 'preprocessor.pkl')
@@ -121,13 +119,13 @@ class DataPreprocessor:
         except Exception as e:
             raise CustomException(e, sys)
 
-    def run_preprocessing(self):
+    def run_preprocessing(self, train_path, test_path):
         """
         Orchestrates the data preprocessing process.
         """
         try:
-            train_df = pd.read_csv(self.preprocessing_config.train_path)
-            test_df = pd.read_csv(self.preprocessing_config.test_path)
+            train_df = pd.read_csv(train_path)
+            test_df = pd.read_csv(test_path)
             logger.info("Read train and test data completed.")
 
             # Define features and target based on the notebook
