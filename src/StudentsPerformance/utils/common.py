@@ -6,6 +6,16 @@ from StudentsPerformance.logginig.logger import setup_logger
 
 logger = setup_logger()
 
+def load_object(file_path: str):
+    """
+    Loads a Python object from a file.
+    """
+    try:
+        with open(file_path, "rb") as file_obj:
+            return joblib.load(file_obj)
+    except Exception as e:
+        raise CustomException(e, sys)
+
 def save_object(file_path: str, obj):
     """
     Saves a Python object to a file using joblib.
