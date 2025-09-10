@@ -71,6 +71,14 @@ class DataIngestion:
             
             train_set, test_set = train_test_split(df, test_size=0.2, random_state=42)
 
+            try:
+                # Get the directory part of the log file path
+                train_data_dir = os.path.dirname(self.ingestion_config.train_data_path)
+                # Create the directory if it doesn't exist
+                os.makedirs(train_data_dir, exist_ok=True)  # train and test data directory is same so doesn't need to repeat.
+            except Exception as e:
+                print(f"Error creating log directory: {e}")
+
             train_set.to_csv(self.ingestion_config.train_data_path, index=False, header=True)
             test_set.to_csv(self.ingestion_config.test_data_path, index=False, header=True)
 
