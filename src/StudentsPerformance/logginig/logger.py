@@ -1,5 +1,6 @@
 import logging
 import sys
+import os
 from logging.handlers import RotatingFileHandler
 
 # Define the format for the log messages
@@ -8,7 +9,14 @@ LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 # Function to set up a configured logger.
 def setup_logger(name="student-performance", log_file="logs\\students-performance.log", level=logging.INFO):
     
-    
+    try:
+        # Get the directory part of the log file path
+        log_dir = os.path.dirname(log_file)
+        # Create the directory if it doesn't exist
+        os.makedirs(log_dir, exist_ok=True)
+    except Exception as e:
+        print(f"Error creating log directory: {e}")
+
     logger = logging.getLogger(name)
     
     # 🛡️ Prevents adding handlers multiple times
