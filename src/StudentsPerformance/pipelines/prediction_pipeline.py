@@ -1,6 +1,7 @@
 import sys
 import os
 import pandas as pd
+import numpy as np
 from dataclasses import dataclass
 from StudentsPerformance.exception.custom_exception import CustomException
 from StudentsPerformance.logginig.logger import setup_logger
@@ -47,8 +48,10 @@ class PredictPipeline:
             # Make a prediction using the loaded model
             prediction = model.predict(data_scaled)
             
+            clipped_prediction = np.clip(prediction[0], 0, 100)
+
             # Since we expect a single prediction, we return the first element
-            return prediction[0]
+            return clipped_prediction
 
         except Exception as e:
             logger.error("An error occurred during the prediction process.")
