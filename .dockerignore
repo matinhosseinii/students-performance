@@ -26,7 +26,6 @@ LICENSE
 # Local Data, Models, and Notebooks
 # The container should fetch data from a live source, not bundle it.
 data/
-models/
 notebooks/
 reports/
 
