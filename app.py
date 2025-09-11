@@ -2,6 +2,17 @@ import streamlit as st
 import pandas as pd
 from StudentsPerformance.pipelines.prediction_pipeline import PredictPipeline, CustomData
 
+st.markdown("""
+<style>
+/* Target only the submit button within a Streamlit form */
+.stForm [data-testid="stFormSubmitButton"] button {
+    background-color: #28a745; /* Green */
+    color: white;
+    border: 1px solid #28a745;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # Page title and header
 st.set_page_config(page_title="Student Performance Predictor", layout="wide")
 st.title("Student Math Score Predictor")
@@ -17,21 +28,23 @@ with st.form("prediction_form"):
     with col1:
         gender = st.selectbox("Gender", options=['male', 'female'])
         race_ethnicity = st.selectbox("Race/Ethnicity", options=['group A', 'group B', 'group C', 'group D', 'group E'])
-    
-    with col2:
         parental_level_of_education = st.selectbox(
             "Parental Level of Education",
             options=["bachelor's degree", 'some college', "master's degree", "associate's degree", 'high school', 'some high school']
         )
+    
+    with col2:
         lunch = st.selectbox("Lunch", options=['standard', 'free/reduced'])
+        test_preparation_course = st.selectbox("Test Preparation Course", options=['none', 'completed'])
 
     with col3:
-        test_preparation_course = st.selectbox("Test Preparation Course", options=['none', 'completed'])
         reading_score = st.number_input("Reading Score", min_value=0, max_value=100, value=50)
         writing_score = st.number_input("Writing Score", min_value=0, max_value=100, value=50)
 
+    st.columns(1)
     # Submit button for the form
-    submit_button = st.form_submit_button(label='Predict Score')
+    submit_button = st.form_submit_button(label='Predict Score',width=200)
+    
 
 
 # --- Prediction Logic ---
