@@ -21,6 +21,19 @@ class PredictPipeline:
     """
     def __init__(self):
         self.predict_pipeline_config = PredictPipelineConfig()
+        
+        logger.info("Loading preprocessor and model artifacts.")
+        
+        # Check for file existence first
+        if not os.path.exists(self.predict_pipeline_config.model_path):
+            raise FileNotFoundError(f"Model file not found at: {self.predict_pipeline_config.model_path}")
+        if not os.path.exists(self.predict_pipeline_config.preprocessor_path):
+            raise FileNotFoundError(f"Preprocessor file not found at: {self.predict_pipeline_config.preprocessor_path}")
+        
+        # Load the objects once
+        self.model = load_object(file_path=self.predict_pipeline_config.model_path)
+        self.preprocessor = load_object(file_path=self.predict_pipeline_config.preprocessor_path)
+        logger.info("Artifacts loaded successfully.")
 
     def predict(self, features: pd.DataFrame) -> float:
         """
@@ -34,19 +47,14 @@ class PredictPipeline:
             float: The predicted value (e.g., the math score).
         """
         try:
-            logger.info("Loading preprocessor and model artifacts.")
-            # Load the saved model and preprocessor objects
-            model = load_object(file_path=self.predict_pipeline_config.model_path)
-            preprocessor = load_object(file_path=self.predict_pipeline_config.preprocessor_path)
-            logger.info("Artifacts loaded successfully.")
 
             logger.info("Applying preprocessor to the new data.")
             # Apply the preprocessor to transform the new input data
-            data_scaled = preprocessor.transform(features)
+            data_scaled = self.preprocessor.transform(features)
             
             logger.info("Making prediction.")
             # Make a prediction using the loaded model
-            prediction = model.predict(data_scaled)
+            prediction = self.model.predict(data_scaled)
             
             clipped_prediction = np.clip(prediction[0], 0, 100)
 
